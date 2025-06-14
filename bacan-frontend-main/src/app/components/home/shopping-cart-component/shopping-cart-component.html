@@ -1,0 +1,21 @@
+<div class="drawer drawer-end">
+  <input id="shopping_cart_drawer" type="checkbox" class="drawer-toggle"/>
+  <div class="drawer-content">
+    <label for="shopping_cart_drawer"
+           class="btn btn-ghost
+                  hover:border-primary border-1
+                  text-primary"
+           (click)="goToCart()">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      Carrito
+    </label>
+  </div>
+
+  <div class="drawer-side">
+    <label for="shopping_cart_drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+      <li><a>Sidebar Item 1</a></li>
+      <li><a>Sidebar Item 2</a></li>
+    </ul>
+  </div>
+</div>

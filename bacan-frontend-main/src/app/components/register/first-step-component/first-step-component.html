@@ -1,0 +1,30 @@
+<div class="flex justify-center items-start space-x-20 h-full">
+  @if (!isLoading) {
+    <form [formGroup]="roleForm" class="flex flex-row justify-center space-x-6 h-full w-full">
+      @for (role of roles; track role.id) {
+        <div class="card card-side w-96 bg-base-300 card-md shadow-sm h-fit">
+          <div class="card-body">
+            <h2 class="card-title">
+              @if (role.name === RoleEnum.SELLER) {
+                Emprendedor
+              } @else {
+                Cliente
+              }
+            </h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nemo similique tempora ut. Dolor
+              doloremque enim et facere illum laboriosam laudantium maxime non obcaecati, officia quibusdam, repellendus
+              sequi ut voluptates!</p>
+            <div class="justify-end card-actions">
+              <input formControlName="roleId" [value]="role.id" type="radio" class="checkbox checkbox-primary"/>
+            </div>
+          </div>
+        </div>
+      }
+    </form>
+  } @else {
+    <div class="flex flex-row justify-center space-x-6 h-full w-full">
+      <div class="skeleton h-60 w-96"></div>
+      <div class="skeleton h-60 w-96"></div>
+    </div>
+  }
+</div>

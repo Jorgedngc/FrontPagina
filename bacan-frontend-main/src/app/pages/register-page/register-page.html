@@ -1,0 +1,58 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmitCreateUser()" class="flex flex-col justify-start h-full w-full">
+
+  <div class="flex justify-start items-center h-1/6">
+    <!-- Logo -->
+    <img class="object-contain ml-10"
+         width="120px"
+         height="40px"
+         src="assets/logo-text.svg"
+         alt="Logo Bacán">
+  </div>
+
+  <!-- Steps -->
+  <div class="flex justify-center items-start h-1/4">
+    <ul class="steps steps-horizontal">
+      <li [class]="steps[currentStep].stepOne">Seleccione su rol</li>
+      <li [class]="steps[currentStep].stepTwo">Información personal</li>
+      <li [class]="steps[currentStep].stepThree">Dirección</li>
+    </ul>
+  </div>
+
+  <!-- Form -->
+  <div class="h-full">
+    <register-first-step [hidden]="currentStep !== 0" [roleForm]="stepOneForm"/>
+    <register-second-step [hidden]="currentStep !== 1" [countries]="countries" [userForm]="stepTwoForm"/>
+    <register-third-step [hidden]="currentStep !== 2" [countries]="countries" [addressForm]="stepThreeForm"/>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="flex justify-between items-center h-1/6">
+    <button (click)="onClickRedirectToLoginPage()"
+            class="btn btn-outline btn-error ml-10" type="button">
+      <span class="material-symbols-outlined">exit_to_app</span>
+      Cancelar
+    </button>
+    <div class="flex justify-between mr-10">
+      <button [disabled]="currentStep === 0"
+              (click)="onClickDecrementStep()"
+              class="btn btn-outline btn-warning mr-10 disabled:text-gray-400" type="button">
+        <span class="material-symbols-outlined">chevron_left</span>
+        Regresar
+      </button>
+
+      @if (currentStep <= steps.length - 1 && !registerForm.valid) {
+        <button [disabled]="currentStep === steps.length - 1"
+                (click)="onClickIncrementStep()"
+                class="btn btn-outline btn-success disabled:text-gray-400" type="button">
+          <span class="material-symbols-outlined">chevron_right</span>
+          Continuar
+        </button>
+      } @else {
+        <button class="btn btn-outline btn-primary" type="submit">
+          <span class="material-symbols-outlined">app_registration</span>
+          Finalizar
+        </button>
+      }
+    </div>
+  </div>
+</form>

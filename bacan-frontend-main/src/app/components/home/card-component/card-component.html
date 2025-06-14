@@ -1,0 +1,32 @@
+<h1 class="text-4xl font-extrabold mb-8 mt-12 text-center text-white drop-shadow-lg">Productos destacados</h1>
+<h2 class="text-lg mb-8 text-center max-w-2xl mx-auto text-gray-200 font-light">Descubra nuestros productos más
+  populares de emprendedores innovadores. Cada producto es único y está hecho con esmero</h2>
+<div class="flex flex-wrap gap-8 justify-center">
+  @for (product of products; track product) {
+    <div
+      class="w-80 bg-base-200 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 transition-transform hover:-translate-y-2 hover:shadow-3xl duration-300">
+      <figure class="px-8 pt-8">
+        <img
+          [src]="product.imageLink"
+          alt="Producto 1"
+          class="rounded-2xl transition-transform duration-300 hover:scale-105 shadow-lg"/>
+      </figure>
+      <div class="card-body pb-8">
+        <h2 class="text-2xl font-bold text-white mb-2">{{ product.title }}</h2>
+        <p class="text-start text-sm text-indigo-100 mb-4">{{ product.description }}</p>
+        <p class="text-lg text-indigo-100 mb-4">{{ product.price }}</p>
+        <button
+          class="bg-primary text-white font-semibold px-6 py-2 rounded-xl shadow-md hover:scale-105 transition-transform duration-200">
+          Comprar
+        </button>
+      </div>
+    </div>
+  }
+
+</div>
+<div class="flex justify-center mt-12 mb-12">
+  <button
+    class="bg-primary text-white font-bold px-8 py-3 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200">
+    Ver todos los productos
+  </button>
+</div>

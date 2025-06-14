@@ -1,0 +1,168 @@
+<div class="flex justify-center h-full">
+  <form [formGroup]="userForm" class="flex flex-row justify-center gap-12 h-full w-full">
+    <div class="flex flex-col justify-center items-center w-2/6 space-y-5 rounded-xl bg-base-300">
+      <!-- Document ID -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Documento de identidad</legend>
+        <label class="input w-full">
+          <span class="material-symbols-outlined">badge</span>
+          <input formControlName="documentId" placeholder="DNI" type="text"/>
+        </label>
+        @if (documentId?.invalid && (documentId?.dirty || documentId?.touched)) {
+          @if (documentId!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su documento de identidad.</span>
+          }
+          @if (documentId!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">Su documento de identidad debe tener como mínimo 8 dígitos</span>
+          }
+          @if (documentId!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">Su documento de identidad debe tener como máximo 20 dígitos</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Name -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Nombre</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">person</span>
+          <input formControlName="name" placeholder="John" type="text"/>
+        </label>
+        @if (name?.invalid && (name?.dirty || name?.touched)) {
+          @if (name!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su nombre.</span>
+          }
+          @if (name!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 2 carácteres</span>
+          }
+          @if (name!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 40 carácteres</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Lastname -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Apellidos</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">person</span>
+          <input formControlName="lastname" placeholder="Doe" type="text"/>
+        </label>
+        @if (lastname?.invalid && (lastname?.dirty || lastname?.touched)) {
+          @if (lastname!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su apellido.</span>
+          }
+          @if (lastname!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 2 carácteres</span>
+          }
+          @if (lastname!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 40 carácteres</span>
+          }
+        }
+      </fieldset>
+
+
+      <!-- Birth Date -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Fecha de nacimiento</legend>
+        <label class="input w-full">
+          <input formControlName="birthdate" placeholder="" type="date" [max]="today"/>
+        </label>
+        @if (birthdate?.invalid && (birthdate?.dirty || birthdate?.touched)) {
+          @if (birthdate!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su fecha de nacimiento.</span>
+          }
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex flex-col justify-center items-center w-2/6 space-y-5 rounded-xl bg-base-300">
+      <!-- Phone -->
+      <div class="flex flex-col w-5/6">
+        <div class="flex flex-row gap-2 w-full">
+          <select class="select w-2/6" formControlName="phoneCountryId">
+            <option disabled selected value="">Prefijo</option>
+            @for (country of countries; track country.id) {
+              <option
+                [value]="country.id">{{ LocationUtil.convertLangToEmoji(country.langCode) }} {{ country.phoneCode }}
+              </option>
+            }
+          </select>
+          <label class="input w-4/6">
+            <span class="material-symbols-outlined">call</span>
+            <input formControlName="phone" placeholder="Número de celular" type="text"/>
+          </label>
+        </div>
+
+        <div>
+          @if (phoneCountryId?.invalid && (phoneCountryId?.dirty || phoneCountryId?.touched)) {
+            @if (phoneCountryId!.hasError('required')) {
+              <span class="ml-1 text-xs text-error">Debe seleccionar el prefijo de su número de celular.</span>
+            }
+          }
+          @if (phone?.invalid && (phone?.dirty || phone?.touched)) {
+            @if (phone!.hasError('required')) {
+              <span class="ml-1 text-xs text-error">Debe ingresar su número de celular.</span>
+            }
+            @if (phone!.hasError('minlength')) {
+              <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 9 dígitos.</span>
+            }
+            @if (phone!.hasError('maxlength')) {
+              <span class="ml-1 text-xs text-error">El campo debe tener como máximo 20 dígitos.</span>
+            }
+            @if (phone!.hasError('pattern')) {
+              <span class="ml-1 text-xs text-error">Debe ingresar un número de celular valido.</span>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Email -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Correo electrónico</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">mail</span>
+          <input formControlName="email" placeholder="john.doe@gmail.com" type="text"/>
+        </label>
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
+          @if (email!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su correo electrónico.</span>
+          }
+          @if (email!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 6 carácteres.</span>
+          }
+          @if (email!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 254 carácteres.</span>
+          }
+          @if (email!.hasError('email')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar un correo valido.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Password -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Contraseña</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">password</span>
+          <input formControlName="password" type="password"/>
+        </label>
+        @if (password?.invalid && (password?.dirty || password?.touched)) {
+          @if (password!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar su contraseña.</span>
+          }
+          @if (password!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">Su contraseña es muy corta.</span>
+          }
+          @if (password!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">Su contraseña excede los límites.</span>
+          }
+        }
+      </fieldset>
+    </div>
+  </form>
+</div>

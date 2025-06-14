@@ -1,0 +1,33 @@
+<div class="h-16 navbar bg-base-300">
+  <div class="navbar-start w-1/6">
+    <img class="h-12 m-1 ml-5 object-contain"
+         src="../../../../assets/logo.svg"
+         alt="Logo Bacán">
+  </div>
+
+  <div class="navbar-center w-2/6">
+    <label class="input w-5/6">
+      <input type="search" placeholder="Buscar productos"/>
+      <span class="material-symbols-outlined">search</span>
+    </label>
+  </div>
+
+  <div class="navbar-end w-3/6">
+    <div class="flex space-x-5">
+      @for (item of navbarItems; track item) {
+        @if (item.isComponent) {
+          <app-shopping-cart-component/>
+        } @else {
+          <button (click)="redirectToLink(item.link)"
+                  class="btn btn-ghost
+                  hover:border-primary border-1
+                  text-primary">
+            <span class="material-symbols-outlined">{{ item.icon }}</span>
+            {{ item.name }}
+          </button>
+        }
+      }
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,165 @@
+<div class="flex justify-center h-full">
+  <form [formGroup]="addressForm" class="flex flex-row justify-center gap-12 h-full w-full">
+    <div class="flex flex-col justify-center items-center w-2/6 space-y-5 rounded-xl bg-base-300">
+      <!-- Country -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">País</legend>
+        <select class="select w-full" formControlName="countryId">
+          @for (country of countries; track country.id) {
+            <option (click)="onClickLoadStates(country.id)" [value]="country.id">
+              {{ LocationUtil.convertLangToEmoji(country.langCode) }} {{ country.name }}
+            </option>
+          }
+        </select>
+        @if (countryId?.invalid && (countryId?.dirty || countryId?.touched)) {
+          @if (countryId!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe seleccionar un país.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- State -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Departamento</legend>
+        <select class="select w-full" formControlName="stateId">
+          @for (state of states; track state.id) {
+            <option (click)="onSelectLoadProvinces(state.id)" [value]="state.id">
+              {{ state.name }}
+            </option>
+          }
+        </select>
+        @if (isStatesLoading) {
+          <progress class="progress w-full"></progress>
+        }
+        @if (stateId?.invalid && (stateId?.dirty || stateId?.touched)) {
+          @if (stateId!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe seleccionar un departamento.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Province -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Provincia</legend>
+        <select class="select w-full" formControlName="provinceId">
+          @for (province of provinces; track province.id) {
+            <option (click)="onSelectLoadDistricts(province.id)" [value]="province.id">
+              {{ province.name }}
+            </option>
+          }
+        </select>
+        @if (isProvincesLoading) {
+          <progress class="progress w-full"></progress>
+        }
+        @if (provinceId?.invalid && (provinceId?.dirty || provinceId?.touched)) {
+          @if (provinceId!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe seleccionar una provincia.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- District -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Distrito</legend>
+        <select class="select w-full" formControlName="districtId">
+          @for (district of districts; track district.id) {
+            <option [value]="district.id">
+              {{ district.name }}
+            </option>
+          }
+        </select>
+        @if (isDistrictsLoading) {
+          <progress class="progress w-full"></progress>
+        }
+        @if (districtId?.invalid && (districtId?.dirty || districtId?.touched)) {
+          @if (districtId!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe seleccionar un distrito.</span>
+          }
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex flex-col justify-center items-center w-2/6 space-y-5 rounded-xl bg-base-300">
+      <!-- Postal Code -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Código postal</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">pin_drop</span>
+          <input formControlName="postalCode" placeholder="" type="text"/>
+        </label>
+        @if (postalCode?.invalid && (postalCode?.dirty || postalCode?.touched)) {
+          @if (postalCode!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar el código postal.</span>
+          }
+          @if (postalCode!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 3 dígitos o carácteres.</span>
+          }
+          @if (postalCode!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 10 dígitos o carácteres.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Street -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Calle</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">route</span>
+          <input formControlName="street" placeholder="" type="text"/>
+        </label>
+        @if (street?.invalid && (street?.dirty || street?.touched)) {
+          @if (street!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar la calle o dirección.</span>
+          }
+          @if (street!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 6 carácteres.</span>
+          }
+          @if (street!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 255 carácteres.</span>
+          }
+        }
+      </fieldset>
+
+
+      <!-- Number -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">N° de puerta</legend>
+        <label
+          class="input w-full">
+          <span class="material-symbols-outlined">apartment</span>
+          <input formControlName="number" placeholder="" type="text"/>
+        </label>
+        @if (number?.invalid && (number?.dirty || number?.touched)) {
+          @if (number!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar el número de puerta.</span>
+          }
+          @if (number!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 2 carácteres o dígitos.</span>
+          }
+          @if (number!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 20 carácteres o dígitos.</span>
+          }
+        }
+      </fieldset>
+
+      <!-- Reference -->
+      <fieldset class="fieldset w-5/6">
+        <legend class="fieldset-legend">Referencia</legend>
+        <textarea formControlName="reference" class="textarea w-full h-auto" placeholder=""></textarea>
+        @if (number?.invalid && (number?.dirty || number?.touched)) {
+          @if (number!.hasError('required')) {
+            <span class="ml-1 text-xs text-error">Debe ingresar la referencia.</span>
+          }
+          @if (number!.hasError('minlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como mínimo 1 carácter.</span>
+          }
+          @if (number!.hasError('maxlength')) {
+            <span class="ml-1 text-xs text-error">El campo debe tener como máximo 255 carácteres.</span>
+          }
+        }
+      </fieldset>
+    </div>
+  </form>
+</div>
